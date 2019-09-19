@@ -40,7 +40,7 @@ export default class TelaInicio extends Component {
 
     async criarTabela() {
         await transaction((tx) => {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS tarefas ' + '(id INTEGER AUTOINCREMENTE NOT NULL PRIMARY KEY, ' +
+            tx.executeSql('CREATE TABLE IF NOT EXISTS tarefa ' + '(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, ' +
                 'tarefa VARCHAR(1000) NOT NULL)'
             );
         });
@@ -55,6 +55,7 @@ export default class TelaInicio extends Component {
                         lista.push(results.rows.item(i));
                     }
                     this.setState({ listaTarefas: lista });
+                    console.log(this.state.listaTarefas);
                 });
         });
     }
@@ -69,8 +70,8 @@ export default class TelaInicio extends Component {
 
                 <FlatList
                     data={this.state.listaTarefas}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => {
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => {
                         return (
                             <View>
                                 <Text>{item.tarefa}</Text>
