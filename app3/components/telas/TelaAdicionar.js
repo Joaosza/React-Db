@@ -8,7 +8,7 @@ export default class TelaAdicionar extends Component {
     state = {
         tarefa: ''
     }
-    
+
     async salvarTarefa() {
         const afazeres = this.state.tarefa
         await db.transaction((tx) => {
@@ -29,12 +29,15 @@ export default class TelaAdicionar extends Component {
                     numberOfLines={5}
                     textAlignVertical='top'
                 />
-                <Button title='salvar'
-                    onPress={() => this.salvarTarefa()}
-                />
-                <Button title='Voltar'
-                    onPress={() => Actions.telaInicio()}
-                ></Button>
+                <View>
+                    <Button title='salvar'
+                        onPress={() => this.salvarTarefa()}
+                    />
+                    <Button title='Voltar'
+                        onPress={() => Actions.telaInicio()}
+                    ></Button>
+                </View>
+
             </View>
         );
     }
