@@ -11,14 +11,7 @@ export default class TelaInicio extends Component {
 
     state = {
         nome: '',
-        listaTarefas: []
-        // lista: [
-        //     { id: '00', tarefa: 'Comprar-batata' },
-        //     { id: '02', tarefa: 'Comprar-cebola' },
-        //     { id: '03', tarefa: 'Comprar-beteraba' },
-        //     { id: '04', tarefa: 'Comprar-banana' },
-        //     { id: '05', tarefa: 'Comprar-coca' },
-        // ]
+        listaTarefas: [],
     }
 
     async componentDidMount() {
@@ -39,16 +32,16 @@ export default class TelaInicio extends Component {
     }
 
     async criarTabela() {
-        await transaction((tx) => {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS tarefa ' + '(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, ' +
-                'tarefa VARCHAR(1000) NOT NULL)'
+        await db.transaction((tx) => {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS tarefas ' + '(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ' +
+                'tarefa VARCHAR(1000) NOT NULL);'
             );
         });
     }
 
     async exibirTarefas() {
         await db.transaction((tx) => {
-            tx.executeSql('SELECT * FROM tarefa ', [],
+            tx.executeSql('SELECT * FROM tarefas ', [],
                 (tx, results) => {
                     const lista = [];
                     for (i = 0; i < results.rows.length; i++) {
@@ -70,7 +63,7 @@ export default class TelaInicio extends Component {
 
                 <FlatList
                     data={this.state.listaTarefas}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({item}) => {
                         return (
                             <View>
